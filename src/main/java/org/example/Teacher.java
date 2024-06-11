@@ -1,13 +1,15 @@
 package org.example;
 
-public class Teacher implements School {
-    private int age;
-    private String name;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-    @Override
-    public void learning() {
-        System.out.println("Teacher is learning ...");
-    }
+@Component
+@Scope(scopeName = "prototype")
+public class Teacher implements School, BeanNameAware {
+
+    private int age;
 
     public int getAge() {
         return age;
@@ -17,19 +19,20 @@ public class Teacher implements School {
         this.age = age;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public void learning() {
+        System.out.println("teacher is learning.");
     }
 
     @Override
     public String toString() {
         return "Teacher{" +
                 "age=" + age +
-                ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("hellow this been called before the use of this bean");
     }
 }
